@@ -1,9 +1,17 @@
 from setuptools import setup
 
+# Read README.md
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(
 	name="cupper",
 	version="0.0.1",
-	description="Cookie-cutter updater, based on https://github.com/aroig/cookiecutter-latex-paper/blob/master/make/cookiecutter-update.py",
+	description="Cookie-cutter updater",
+	long_description=long_description,
+	long_description_content_type="text/markdown",
 	author="Mike Jewell",
 	author_email="mike.jewell@senseye.io",
 	license="MIT",

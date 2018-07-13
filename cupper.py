@@ -1,6 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 
 import os
 import sys
@@ -64,10 +62,13 @@ def update_template(context, root, branch):
         subprocess.run(["git", "commit", "-m", "Update template"],
                        cwd=tmp_workdir)
 
-
-if __name__ == '__main__':
-    with open(sys.argv[1], 'r') as fd:
+def main():
+    import sys
+    if len(sys.argv) != 3:
+        print("Usage: cupper <context filename> <branch>")
+        sys.exit(1)
+    context_file, branch = sys.argv[1], sys.argv[2]
+    with open(context_file, 'r') as fd:
         context = json.load(fd)
 
-    update_template(context, os.getcwd(), branch=sys.argv[2])
-
+    update_template(context, os.getcwd(), branch=branch)

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name="cupper",
-	version="0.0.6",
+	version="0.0.1",
 	description="Cookie-cutter updater, based on https://github.com/aroig/cookiecutter-latex-paper/blob/master/make/cookiecutter-update.py",
 	author="Mike Jewell",
 	author_email="mike.jewell@senseye.io",

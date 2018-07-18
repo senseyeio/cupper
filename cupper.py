@@ -4,7 +4,7 @@ import os
 import sys
 import json
 import shutil
-import subprocess
+import subprocess32 as subprocess
 import json
 from cookiecutter.main import cookiecutter
 

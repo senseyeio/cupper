@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import argparse
 import os
 import sys
 import json
@@ -63,12 +64,11 @@ def update_template(context, root, branch):
                        cwd=tmp_workdir)
 
 def main():
-    import sys
-    if len(sys.argv) != 3:
-        print("Usage: cupper <context filename> <branch>")
-        sys.exit(1)
-    context_file, branch = sys.argv[1], sys.argv[2]
-    with open(context_file, 'r') as fd:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("context_file", metavar="context-file")
+    parser.add_argument("branch")
+    args = parser.parse_args()
+    with open(args.context_file, 'r') as fd:
         context = json.load(fd)
 
-    update_template(context, os.getcwd(), branch=branch)
+    update_template(context, os.getcwd(), branch=args.branch)

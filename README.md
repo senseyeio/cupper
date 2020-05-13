@@ -15,3 +15,6 @@ You can then merge these changes into your existing code:
 This code is heavily based on https://github.com/aroig/cookiecutter-latex-paper/blob/master/make/cookiecutter-update.py, with a few very small changes. 
 
 Note that you will need a recent version of git for this to work (it needs --no-checkout on git worktree)
+
+Use `--checkout REV` or `-c REV` to check out a specific template revision. This option is forwarded to cookiecutter, and takes a branch, tag, or commit which should be checked out by cookiecutter after cloning the template repository.
+

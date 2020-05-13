@@ -68,7 +68,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("context_file", metavar="context-file")
     parser.add_argument("branch")
-    parser.add_argument("--checkout", "-c")
+    parser.add_argument(
+        "--checkout", "-c", metavar="REV", help="check out the given template revision"
+    )
     args = parser.parse_args()
     with open(args.context_file, 'r') as fd:
         context = json.load(fd)

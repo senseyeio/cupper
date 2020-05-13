@@ -34,7 +34,7 @@ class TemporaryWorkdir():
         subprocess.run(["git", "worktree", "prune"], cwd=self.repo)
 
 
-def update_template(context, root, branch):
+def update_template(context, root, branch, checkout=None):
     """Update template branch from a template url"""
     template_url = context['_template']
     tmpdir       = os.path.join(root, ".git", "cookiecutter")
@@ -53,6 +53,7 @@ def update_template(context, root, branch):
     with TemporaryWorkdir(tmp_workdir, repo=root, branch=branch):
         # update the template
         cookiecutter(template_url,
+                     checkout=checkout,
                      no_input=True,
                      extra_context=context,
                      overwrite_if_exists=True,
@@ -67,8 +68,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("context_file", metavar="context-file")
     parser.add_argument("branch")
+    parser.add_argument("--checkout", "-c")
     args = parser.parse_args()
     with open(args.context_file, 'r') as fd:
         context = json.load(fd)
 
-    update_template(context, os.getcwd(), branch=args.branch)
+    update_template(context, os.getcwd(), branch=args.branch, checkout=args.checkout)

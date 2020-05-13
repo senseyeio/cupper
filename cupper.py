@@ -66,8 +66,12 @@ def update_template(context, root, branch, checkout=None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("context_file", metavar="context-file")
-    parser.add_argument("branch")
+    parser.add_argument(
+        "context_file",
+        metavar="context-file",
+        help="JSON file containing configuration for cookiecutter",
+    )
+    parser.add_argument("branch", help="name of the branch to create")
     parser.add_argument(
         "--checkout", "-c", metavar="REV", help="check out the given template revision"
     )

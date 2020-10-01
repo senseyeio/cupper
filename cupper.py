@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import argparse
 import os
 import sys
 import json
@@ -33,7 +34,7 @@ class TemporaryWorkdir():
         subprocess.run(["git", "worktree", "prune"], cwd=self.repo)
 
 
-def update_template(context, root, branch):
+def update_template(context, root, branch, checkout=None):
     """Update template branch from a template url"""
     template_url = context['_template']
     tmpdir       = os.path.join(root, ".git", "cookiecutter")
@@ -52,6 +53,7 @@ def update_template(context, root, branch):
     with TemporaryWorkdir(tmp_workdir, repo=root, branch=branch):
         # update the template
         cookiecutter(template_url,
+                     checkout=checkout,
                      no_input=True,
                      extra_context=context,
                      overwrite_if_exists=True,
@@ -63,12 +65,18 @@ def update_template(context, root, branch):
                        cwd=tmp_workdir)
 
 def main():
-    import sys
-    if len(sys.argv) != 3:
-        print("Usage: cupper <context filename> <branch>")
-        sys.exit(1)
-    context_file, branch = sys.argv[1], sys.argv[2]
-    with open(context_file, 'r') as fd:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "context_file",
+        metavar="context-file",
+        help="JSON file containing configuration for cookiecutter",
+    )
+    parser.add_argument("branch", help="name of the branch to create")
+    parser.add_argument(
+        "--checkout", "-c", metavar="REV", help="check out the given template revision"
+    )
+    args = parser.parse_args()
+    with open(args.context_file, 'r') as fd:
         context = json.load(fd)
 
-    update_template(context, os.getcwd(), branch=branch)
+    update_template(context, os.getcwd(), branch=args.branch, checkout=args.checkout)
